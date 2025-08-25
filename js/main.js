@@ -9,7 +9,39 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUserInterface();
     setupEventListeners();
     loadContentFromSettings();
+    setupMobileMenu();
 });
+
+// Setup mobile menu
+function setupMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const adminBtnMobile = document.getElementById('adminBtnMobile');
+    
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars text-xl';
+            } else {
+                icon.className = 'fas fa-times text-xl';
+            }
+        });
+    }
+    
+    // Mobile admin button
+    if (adminBtnMobile) {
+        adminBtnMobile.addEventListener('click', () => {
+            const password = prompt('Enter admin password:');
+            if (password === db.getSettings().adminPassword) {
+                window.location.href = 'admin.html';
+            } else {
+                showNotification('Invalid admin password!', 'error');
+            }
+        });
+    }
+}
 
 // Load content from settings
 function loadContentFromSettings() {
@@ -203,7 +235,7 @@ function displayProducts(productsToShow = null) {
         productCard.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h3 class="font-semibold text-lg mb-2">${product.name}</h3>
+                <h3 class="font-semibold text-base sm:text-lg mb-2 line-clamp-2">${product.name}</h3>
                 <p class="text-gray-600 text-sm mb-2 line-clamp-2">${product.description}</p>
                 <div class="flex items-center mb-2">
                     ${generateStarRating(avgRating)}
@@ -211,12 +243,11 @@ function displayProducts(productsToShow = null) {
                 </div>
                 <div class="flex justify-between items-center mb-3">
                     <div>
-                        <span class="text-xl font-bold text-purple-600">₹${product.price}</span>
-                        ${product.originalPrice ? `<span class="text-sm text-gray-500 line-through ml-2">₹${product.originalPrice}</span>` : ''}
+                        <span class="text-lg sm:text-xl font-bold text-purple-600">₹${product.price}</span>
+                        ${product.originalPrice ? `<span class="text-xs sm:text-sm text-gray-500 line-through ml-2">₹${product.originalPrice}</span>` : ''}
                     </div>
                 </div>
-                <button onclick="showProductDetails(${product.id})" 
-                        class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                <button onclick="showProductDetails(${product.id})" class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition text-sm sm:text-base">
                     View Details
                 </button>
             </div>
@@ -239,27 +270,27 @@ function showProductDetails(productId) {
         reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
     
     modalContent.innerHTML = `
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             <div>
                 <img src="${product.image}" alt="${product.name}" class="w-full rounded-lg">
             </div>
             <div>
-                <h3 class="text-2xl font-bold mb-2">${product.name}</h3>
+                <h3 class="text-xl lg:text-2xl font-bold mb-2">${product.name}</h3>
                 <p class="text-gray-600 mb-4">${product.description}</p>
                 <div class="flex items-center mb-4">
                     ${generateStarRating(avgRating)}
                     <span class="text-gray-500 ml-2">(${reviews.length} reviews)</span>
                 </div>
                 <div class="mb-4">
-                    <span class="text-3xl font-bold text-purple-600">₹${product.price}</span>
-                    ${product.originalPrice ? `<span class="text-lg text-gray-500 line-through ml-2">₹${product.originalPrice}</span>` : ''}
+                    <span class="text-2xl lg:text-3xl font-bold text-purple-600">₹${product.price}</span>
+                    ${product.originalPrice ? `<span class="text-base lg:text-lg text-gray-500 line-through ml-2">₹${product.originalPrice}</span>` : ''}
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Size:</label>
-                    <div class="flex flex-wrap gap-2" id="sizeOptions">
+                    <div class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2" id="sizeOptions">
                         ${product.sizes.map(size => `
-                            <button class="size-option px-3 py-1 border rounded hover:bg-purple-100 transition" data-size="${size}">
+                            <button class="size-option px-2 sm:px-3 py-1 border rounded hover:bg-purple-100 transition text-sm" data-size="${size}">
                                 ${size}
                             </button>
                         `).join('')}
@@ -268,9 +299,9 @@ function showProductDetails(productId) {
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2">Color:</label>
-                    <div class="flex flex-wrap gap-2" id="colorOptions">
+                    <div class="grid grid-cols-3 sm:flex sm:flex-wrap gap-2" id="colorOptions">
                         ${product.colors.map(color => `
-                            <button class="color-option px-3 py-1 border rounded hover:bg-purple-100 transition" data-color="${color}">
+                            <button class="color-option px-2 sm:px-3 py-1 border rounded hover:bg-purple-100 transition text-sm" data-color="${color}">
                                 ${color}
                             </button>
                         `).join('')}
@@ -289,16 +320,16 @@ function showProductDetails(productId) {
             </div>
         </div>
         
-        <div class="mt-6 border-t pt-4">
+        <div class="mt-4 lg:mt-6 border-t pt-4">
             <h3 class="font-semibold mb-4">Customer Reviews:</h3>
             <div id="reviewsList">
                 ${reviews.length > 0 ? reviews.map(review => `
-                    <div class="border-b pb-3 mb-3">
+                    <div class="border-b pb-3 mb-3 last:border-b-0">
                         <div class="flex items-center mb-1">
                             <span class="font-medium">${review.customerName}</span>
                             <div class="ml-2">${generateStarRating(review.rating)}</div>
                         </div>
-                        <p class="text-gray-600">${review.comment}</p>
+                        <p class="text-gray-600 text-sm">${review.comment}</p>
                         <small class="text-gray-400">${new Date(review.date).toLocaleDateString()}</small>
                     </div>
                 `).join('') : '<p class="text-gray-500">No reviews yet.</p>'}
@@ -427,15 +458,14 @@ function displayCart() {
     });
     
     cartContent.innerHTML = `
-        <div class="max-h-96 overflow-y-auto">
+        <div class="max-h-60 sm:max-h-96 overflow-y-auto">
             ${cartItemsHtml}
         </div>
-        <div class="border-t pt-4 mt-4">
+        <div class="border-t pt-4 mt-4 sticky bottom-0 bg-white">
             <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-semibold">Total: ₹${total}</span>
+                <span class="text-base sm:text-lg font-semibold">Total: ₹${total}</span>
             </div>
-            <button onclick="proceedToOrder()" 
-                    class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition">
+            <button onclick="proceedToOrder()" class="w-full bg-green-600 text-white py-2 sm:py-3 rounded-lg hover:bg-green-700 transition text-sm sm:text-base">
                 <i class="fab fa-whatsapp mr-2"></i>Order on WhatsApp
             </button>
         </div>

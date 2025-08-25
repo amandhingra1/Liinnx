@@ -7,7 +7,40 @@ document.addEventListener('DOMContentLoaded', function() {
     showSection('dashboard');
     loadDashboardStats();
     loadCharts();
+    setupMobileMenu();
 });
+
+function setupMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    
+    if (mobileMenuToggle && mobileSidebar) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileSidebar.classList.remove('hidden');
+        });
+    }
+    
+    // Setup mobile sidebar items
+    const mobileSidebarItems = mobileSidebar?.querySelectorAll('.sidebar-item');
+    mobileSidebarItems?.forEach(item => {
+        item.addEventListener('click', () => {
+            const section = item.dataset.section;
+            showSection(section);
+            closeMobileSidebar();
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-item').forEach(si => si.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+}
+
+function closeMobileSidebar() {
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    if (mobileSidebar) {
+        mobileSidebar.classList.add('hidden');
+    }
+}
 
 function setupAdminEventListeners() {
     // Sidebar navigation

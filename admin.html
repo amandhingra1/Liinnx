@@ -26,15 +26,15 @@
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
+                <div class="flex items-center min-w-0">
                     <img src="/public/logo.jpg" alt="Liinnx Logo" class="h-10 w-auto mr-3">
-                    <span class="text-2xl font-bold text-gray-800">Liinnx Admin</span>
+                    <span class="text-xl sm:text-2xl font-bold text-gray-800 truncate">Liinnx Admin</span>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button id="backToHomepage" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button id="backToHomepage" class="bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm">
                         <i class="fas fa-home mr-2"></i>Back to Homepage
                     </button>
-                    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                    <button id="logoutBtn" class="bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm">
                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
                     </button>
                 </div>
@@ -44,7 +44,7 @@
 
     <div class="flex">
         <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg min-h-screen">
+        <div class="w-64 bg-white shadow-lg min-h-screen hidden lg:block">
             <div class="p-4">
                 <ul class="space-y-2">
                     <li>
@@ -86,14 +86,71 @@
             </div>
         </div>
 
+        <!-- Mobile Sidebar -->
+        <div id="mobileSidebar" class="fixed inset-0 z-50 lg:hidden hidden">
+            <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeMobileSidebar()"></div>
+            <div class="fixed left-0 top-0 bottom-0 w-64 bg-white shadow-lg">
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Menu</h3>
+                        <button onclick="closeMobileSidebar()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <ul class="space-y-2">
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="dashboard">
+                                <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="products">
+                                <i class="fas fa-box mr-3"></i>Product Management
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="orders">
+                                <i class="fas fa-shopping-cart mr-3"></i>Order Management
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="reviews">
+                                <i class="fas fa-star mr-3"></i>Customer Reviews
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="customers">
+                                <i class="fas fa-users mr-3"></i>Customer Management
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="content">
+                                <i class="fas fa-edit mr-3"></i>Content Management
+                            </button>
+                        </li>
+                        <li>
+                            <button class="sidebar-item w-full text-left px-4 py-3 rounded-lg flex items-center" data-section="settings">
+                                <i class="fas fa-cog mr-3"></i>Settings
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Content -->
-        <div class="flex-1 p-8">
+        <div class="flex-1 p-4 sm:p-6 lg:p-8">
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuToggle" class="lg:hidden mb-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                <i class="fas fa-bars mr-2"></i>Menu
+            </button>
+            
             <!-- Dashboard Section -->
             <div id="dashboard-section" class="admin-section">
-                <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Dashboard</h1>
                 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <div class="flex items-center">
                             <div class="p-3 bg-blue-100 rounded-full">
@@ -152,7 +209,7 @@
                 </div>
 
                 <!-- Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-lg font-semibold mb-4">Sales Overview</h3>
                         <canvas id="salesChart"></canvas>
@@ -167,7 +224,7 @@
             <!-- Product Management Section -->
             <div id="products-section" class="admin-section hidden">
                 <div class="flex justify-between items-center mb-8">
-                    <h1 class="text-3xl font-bold">Product Management</h1>
+                    <h1 class="text-2xl sm:text-3xl font-bold">Product Management</h1>
                     <button id="addProductBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
                         <i class="fas fa-plus mr-2"></i>Add Product
                     </button>
@@ -175,10 +232,9 @@
                 
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
                     <div class="p-6 border-b">
-                        <div class="flex space-x-4">
-                            <input type="text" id="productSearch" placeholder="Search products..." 
-                                   class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                            <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                            <input type="text" id="productSearch" placeholder="Search products..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <select id="categoryFilter" class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                                 <option value="">All Categories</option>
                                 <option value="men">Men</option>
                                 <option value="women">Women</option>
@@ -195,14 +251,13 @@
 
             <!-- Order Management Section -->
             <div id="orders-section" class="admin-section hidden">
-                <h1 class="text-3xl font-bold mb-8">Order Management</h1>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-8">Order Management</h1>
                 
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
                     <div class="p-6 border-b">
-                        <div class="flex space-x-4">
-                            <input type="text" id="orderSearch" placeholder="Search orders..." 
-                                   class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                            <select id="statusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                            <input type="text" id="orderSearch" placeholder="Search orders..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <select id="statusFilter" class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                                 <option value="">All Status</option>
                                 <option value="pending">Pending</option>
                                 <option value="confirmed">Confirmed</option>
