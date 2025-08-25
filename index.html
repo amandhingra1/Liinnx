@@ -27,41 +27,48 @@
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <img src="/public/logo.jpg" alt="Liinnx Logo" class="h-10 w-auto mr-3">
-                    <span class="text-2xl font-bold text-gray-800">Liinnx</span>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#productsSection" class="text-gray-700 hover:text-purple-600 font-medium">Products</a>
-                    <a href="#heroSection" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
-                    <button onclick="contactWhatsApp()" class="text-gray-700 hover:text-purple-600 font-medium">Contact</button>
-                    <button onclick="openSizeGuide()" class="text-gray-700 hover:text-purple-600 font-medium">Size Guide</button>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Search for products..." 
-                               class="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
-                    </div>
-                    <button id="profileBtn" class="relative p-2 text-gray-700 hover:text-purple-600">
-                        <i class="fas fa-user text-xl"></i>
-                    </button>
-                    <button id="cartBtn" class="relative p-2 text-gray-700 hover:text-purple-600">
-                        <i class="fas fa-shopping-bag text-xl"></i>
-                        <span id="cartCount" class="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                    </button>
-                    <button id="adminBtn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-                        Admin
-                    </button>
-                </div>
-            </div>
+    
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Use flex-wrap so items can stack on small screens -->
+    <div class="flex flex-wrap items-center justify-between py-3">
+      <!-- Left: logo + brand -->
+      <div class="flex items-center flex-shrink-0">
+        <img src="/public/logo.jpg" alt="Liinnx Logo" class="h-10 w-auto mr-3">
+        <span class="text-2xl font-bold text-gray-800">Liinnx</span>
+      </div>
+
+      <!-- Middle: links (hidden on small screens) -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="#productsSection" class="text-gray-700 hover:text-purple-600 font-medium">Products</a>
+        <a href="#heroSection" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+        <button onclick="contactWhatsApp()" class="text-gray-700 hover:text-purple-600 font-medium">Contact</button>
+        <button onclick="openSizeGuide()" class="text-gray-700 hover:text-purple-600 font-medium">Size Guide</button>
+      </div>
+
+      <!-- Right: icons and admin button -->
+      <!-- On small screens, give it margin-top so it wraps under logo -->
+      <div class="flex items-center space-x-3 mt-3 md:mt-0">
+        <div class="flex items-center space-x-2">
+          <button id="searchBtn" class="p-2 text-gray-700 hover:text-purple-600" aria-label="Search">
+            <i class="fas fa-search text-xl"></i>
+          </button>
         </div>
-    </nav>
+        <button id="profileBtn" class="relative p-2 text-gray-700 hover:text-purple-600">
+          <i class="fas fa-user text-xl"></i>
+        </button>
+        <button id="cartBtn" class="relative p-2 text-gray-700 hover:text-purple-600">
+          <i class="fas fa-shopping-bag text-xl"></i>
+          <span id="cartCount" class="absolute -top-1 -right-1 bg-purple-600 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">0</span>
+        </button>
+        <button id="adminBtn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+          Admin
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
 
     <!-- Hero Section -->
     <section id="heroSection" class="hero-gradient text-white py-20" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg'); background-size: cover; background-position: center; background-blend-mode: overlay;">
